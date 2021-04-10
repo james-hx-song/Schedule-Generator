@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "67680563766",
+    "project_id": "ia2022-projectmanager",
+    "storage_bucket": "ia2022-projectmanager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67680563766:android:a56e2c9d21a0f2bd999e97",
+        "android_client_info": {
+          "package_name": "com.example.schedulegenerator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "67680563766-227pqu2a7p86oa5hbeurs5h9sstvs3ck.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKHi5swdm6JU5Eq6oAmVel4VDxJvvgTvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "67680563766-227pqu2a7p86oa5hbeurs5h9sstvs3ck.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
