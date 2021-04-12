@@ -1,8 +1,10 @@
-package com.example.schedulegenerator;
+package com.example.schedulegenerator.Controllers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.schedulegenerator.R;
 
 public class MainActivity extends AppCompatActivity {
 
