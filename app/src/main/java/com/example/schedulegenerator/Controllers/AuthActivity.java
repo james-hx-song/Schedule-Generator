@@ -3,6 +3,7 @@ package com.example.schedulegenerator.Controllers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -70,48 +71,7 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
-    public void signup(View v)
-    {
-        String userEmail = emailField.getText().toString();
-        String userPassword = passwordField.getText().toString();
-        if(!userEmail.contains("@"))
-        {
-            Toast.makeText(AuthActivity.this,
-                    "Please enter valid email address", Toast.LENGTH_LONG).show();
-        }
-        if (userEmail.length() == 0 || userPassword.length() == 0)
-        {
-            Toast.makeText(AuthActivity.this,
-                    "Information incomplete", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful())
-                            {
-                                Log.d("SIGN UP", "Successfully signed up the user");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                fireStore.collection("users")
-                                        .document(user.getUid()).set();
-                                Toast.makeText(AuthActivity.this,
-                                        "successfully signed up the user",
-                                        Toast.LENGTH_LONG).show();
-
-                            }
-                            else
-                            {
-                                Log.w("SIGN UP","createUserWithEmail: failure",
-                                        task.getException());
-                                Toast.makeText(AuthActivity.this,
-                                        "authentification failed" + task.getException().toString(),
-                                        Toast.LENGTH_LONG).show();
-
-                            }
-                        }
-                    });	        }
+    public void signup(View v) {
 
     }
 }
