@@ -12,13 +12,14 @@
         <activity android:name=".Controllers.SignUpActivity"></activity>
         <activity android:name=".Controllers.UserProfileActivity" />
         <activity android:name=".Controllers.AddProjectActivity" />
-        <activity android:name=".Controllers.AuthActivity" />
-        <activity android:name=".Controllers.MainActivity">
+        <activity android:name=".Controllers.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Controllers.MainActivity">
         </activity>
     </application>
 

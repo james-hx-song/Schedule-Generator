@@ -4,18 +4,16 @@ import java.util.ArrayList;
 
 public class Project {
     private ArrayList<String> collaborators;
+
+
+
     private boolean open;
     private String projectID;
     private int capacity;
     private String status;
+    private String name;
 
-    public Project(ArrayList<String> collaborators, boolean open, String projectID, int capacity, String status) {
-        this.collaborators = collaborators;
-        this.open = open;
-        this.projectID = projectID;
-        this.capacity = capacity;
-        this.status = status;
-    }
+
 
     public Project() {
         collaborators = new ArrayList<String>();
@@ -23,6 +21,17 @@ public class Project {
         projectID = "";
         capacity = 0;
         status = "default";
+        name = "default";
+    }
+
+    public Project(ArrayList<String> collaborators, boolean open, String projectID,
+                   int capacity, String status, String name) {
+        this.collaborators = collaborators;
+        this.open = open;
+        this.projectID = projectID;
+        this.capacity = capacity;
+        this.status = status;
+        this.name = name;
     }
 
     public ArrayList<String> getCollaborators() {
@@ -33,6 +42,13 @@ public class Project {
         this.collaborators = collaborators;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     public boolean isOpen() {
         return open;
     }

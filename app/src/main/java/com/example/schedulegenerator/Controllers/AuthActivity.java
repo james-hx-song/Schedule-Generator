@@ -58,6 +58,8 @@ public class AuthActivity extends AppCompatActivity {
                                 Toast.makeText(AuthActivity.this,
                                         "successfully signed in the user",
                                         Toast.LENGTH_LONG).show();
+                                Intent i = new Intent(getBaseContext(), MainActivity.class);
+                                startActivity(i);
                             }
                             else
                             {
