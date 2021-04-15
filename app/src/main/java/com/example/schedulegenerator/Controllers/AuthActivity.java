@@ -72,6 +72,9 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     public void signup(View v) {
+        Intent i = new Intent(this, SignUpActivity.class);
+        startActivity(i);
+
 
     }
 }
