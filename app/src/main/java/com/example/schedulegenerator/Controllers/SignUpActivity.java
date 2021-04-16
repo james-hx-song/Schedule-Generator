@@ -71,8 +71,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
     private User getCurrentUser()
     {
+        ArrayList<String> newArrayList = new ArrayList<String>();
         User currentUser = new User(mAuth.getUid(), userRealName.getText().toString(),
-                userEmail.getText().toString(), new ArrayList<String>(), "default");
+                userEmail.getText().toString(), newArrayList, "default");
         return currentUser;
     }
 }

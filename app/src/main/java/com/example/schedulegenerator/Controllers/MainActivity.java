@@ -76,9 +76,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public void refresh(View v)
+    {
+        projectAdapter myAdapter = new projectAdapter(allProjects, this);
+        myAdapter.clear();
+        projectRecycler.setAdapter(myAdapter);
+        populateData();
+    }
+
     public void goToAddProject(View v)
     {
         Intent i = new Intent(this, AddProjectActivity.class);
         startActivity(i);
+    }
+
+    public void signOut(View v)
+    {
+        mAuth.signOut();
+        Intent goBacktoAuth = new Intent(this, AuthActivity.class);
+        startActivity(goBacktoAuth);
     }
 }

@@ -23,6 +23,13 @@ public class projectAdapter extends RecyclerView.Adapter<projectViewHolder>{
         this.mData = data;
         this.context = context;
     }
+
+    public void clear()
+    {
+        int size = mData.size();
+        mData.clear();
+        notifyItemRangeRemoved(0, size);
+    }
     @NonNull
     @Override
     public projectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
