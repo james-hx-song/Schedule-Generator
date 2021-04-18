@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.schedulegenerator.Model.User;
 import com.example.schedulegenerator.R;
+import com.example.schedulegenerator.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -59,7 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
                             if (task.isSuccessful())
                             {
                                 String userID = getCurrentUser().getUid();
-                                fireStore.collection("users").document(userID).set(
+                                fireStore.collection(Constants.USER).document(userID).set(
                                         getCurrentUser()
                                 );
                                 Intent i = new Intent(getBaseContext(), MainActivity.class);

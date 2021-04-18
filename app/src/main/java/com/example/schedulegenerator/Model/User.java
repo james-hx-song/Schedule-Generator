@@ -10,6 +10,10 @@ public class User {
     private ArrayList<String> projectList;
     private String role;
 
+    public User()
+    {
+
+    }
     public User(String uid, String name, String email, ArrayList<String> projectList, String role) {
         this.uid = uid;
         this.name = name;

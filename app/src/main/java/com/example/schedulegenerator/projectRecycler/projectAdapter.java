@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class projectAdapter extends RecyclerView.Adapter<projectViewHolder>{
 
-    ArrayList<Project> mData;
+    private ArrayList<Project> mData;
     private Context context;
     public projectAdapter(ArrayList data, Context context)
     {

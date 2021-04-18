@@ -50,7 +50,7 @@ public class AddProjectActivity extends AppCompatActivity {
     {
         String projectID = UUID.randomUUID().toString();
         String name = projectName.getText().toString();
-        String status = projectName.getText().toString();
+        String status = projectStatus.getText().toString();
         int size = Integer.parseInt(projectCapacity.getText().toString());
 
         Project newProject = new Project(collabs, true, projectID, size, status, name);
