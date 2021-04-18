@@ -57,18 +57,14 @@ public class MainActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult())
                         {
                             Project currProject = document.toObject(Project.class);
-                            if (currProject.isOpen())
-                            {
-                                allProjects.add(currProject);
-                            }
-
+                            allProjects.add(currProject);
                         }
-                        projectAdapter mAdapter = new projectAdapter(allProjects, getBaseContext());
-                        projectRecycler.setAdapter(mAdapter);
-                        projectRecycler.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                     }
                 }
             });
+            projectAdapter mAdapter = new projectAdapter(allProjects, getBaseContext());
+            projectRecycler.setAdapter(mAdapter);
+            projectRecycler.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         }
         catch(Exception e)
         {
