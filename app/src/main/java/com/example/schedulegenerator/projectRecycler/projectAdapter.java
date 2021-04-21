@@ -1,6 +1,7 @@
 package com.example.schedulegenerator.projectRecycler;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.schedulegenerator.Controllers.ProjectProfileActivity;
 import com.example.schedulegenerator.Model.Project;
 import com.example.schedulegenerator.R;
+import com.example.schedulegenerator.Utils.Constants;
 
 import java.util.ArrayList;
 
@@ -43,7 +46,18 @@ public class projectAdapter extends RecyclerView.Adapter<projectViewHolder>{
     public void onBindViewHolder(@NonNull projectViewHolder holder, int position) {
         holder.projectName.setText(mData.get(position).getName());
         holder.projectStatus.setText(mData.get(position).getStatus());
-
+        holder.getLayout().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Project projectNow = mData.get(position);
+                Intent i = new Intent(context, ProjectProfileActivity.class);
+                i.putExtra(Constants.ID, projectNow.getProjectID());
+                i.putExtra(Constants.NAME, projectNow.getProjectID());
+                i.putExtra(Constants.OPEN, projectNow.isOpen());
+                i.putExtra(Constants.STATUS, projectNow.getStatus());
+                i.putExtra(Constants.SIZE, projectNow.getCapacity());
+            }
+        });
     }
 
     @Override
