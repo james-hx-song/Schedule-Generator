@@ -56,6 +56,7 @@ public class projectAdapter extends RecyclerView.Adapter<projectViewHolder>{
                 i.putExtra(Constants.OPEN, projectNow.isOpen());
                 i.putExtra(Constants.STATUS, projectNow.getStatus());
                 i.putExtra(Constants.SIZE, projectNow.getCapacity());
+                i.putExtra(Constants.ID, projectNow.getProjectID());
             }
         });
     }

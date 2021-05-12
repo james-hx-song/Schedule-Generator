@@ -60,11 +60,13 @@ public class MainActivity extends AppCompatActivity {
                             allProjects.add(currProject);
                         }
                     }
+                    projectAdapter mAdapter = new projectAdapter(allProjects, getBaseContext());
+                    projectRecycler.setAdapter(mAdapter);
+                    projectRecycler.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+
                 }
             });
-            projectAdapter mAdapter = new projectAdapter(allProjects, getBaseContext());
-            projectRecycler.setAdapter(mAdapter);
-            projectRecycler.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+
         }
         catch(Exception e)
         {

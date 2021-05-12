@@ -9,4 +9,5 @@ public class Constants {
     public static final String NAME = "name";
     public static final String STATUS = "status";
     public static final String OPEN = "open";
+    public static final String RQ = "request";
 }
