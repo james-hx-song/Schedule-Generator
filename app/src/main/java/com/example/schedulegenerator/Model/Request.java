@@ -5,6 +5,7 @@ public class Request {
     private String requesterName;
     private String projectID;
     private String requestMsg;
+    private boolean isApproved;
 
     public Request()
     {
@@ -35,11 +36,22 @@ public class Request {
         this.requestMsg = requestMsg;
     }
 
-    public Request(String requesterID, String projectID, String requestMsg, String requesterName) {
+
+
+    public Request(String requesterID, String projectID, String requestMsg, String requesterName, boolean isApproved) {
         this.requesterID = requesterID;
         this.projectID = projectID;
         this.requestMsg = requestMsg;
         this.requesterName = requesterName;
+        this.isApproved = isApproved;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
     }
 
     public String getRequesterName() {

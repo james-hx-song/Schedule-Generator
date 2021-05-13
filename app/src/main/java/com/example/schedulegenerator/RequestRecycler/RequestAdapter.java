@@ -1,12 +1,15 @@
 package com.example.schedulegenerator.RequestRecycler;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.schedulegenerator.Model.Request;
+import com.example.schedulegenerator.R;
 
 import java.util.ArrayList;
 
@@ -24,12 +27,17 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
     @NonNull
     @Override
     public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View myView = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_row_layout
+        , parent, false);
+        RequestViewHolder newHolder = new RequestViewHolder(myView);
+        return newHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
-
+        holder.requestName.setText(mData.get(position).getRequesterName());
+        String status = mData.get(position).isApproved() ? "approved" : "not approved";
+        holder.status.setText(status);
     }
 
     @Override

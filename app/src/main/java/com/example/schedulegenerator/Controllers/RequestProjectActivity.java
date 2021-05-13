@@ -3,6 +3,7 @@ package com.example.schedulegenerator.Controllers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -46,13 +47,15 @@ public class RequestProjectActivity extends AppCompatActivity {
                             String userName = task.getResult().toObject(User.class).getName();
                             String projectID = getIntent().getStringExtra(Constants.ID);
                             Request newRq = new Request(mAuth.getUid(), projectID
-                                    , reqMsg.getText().toString(), userName);
+                                    , reqMsg.getText().toString(), userName, false);
                             mStore.collection(Constants.RQ).document(projectID).set(newRq);
                         }
                     }
                 }
         );
-
+        Intent i = new Intent(this, ProjectProfileActivity.class);
+        startActivity(i);
+        finish();
     }
 
 
