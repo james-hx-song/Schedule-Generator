@@ -11,5 +11,8 @@ public class Constants {
     public static final String OPEN = "open";
     public static final String RQ = "request";
 
+    public static final String PUBLIC = "Public";
+    public static final String PRIVATE = "Private";
+
 
 }

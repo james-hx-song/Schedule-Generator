@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.schedulegenerator.Model.Request;
 import com.example.schedulegenerator.Model.User;
@@ -53,6 +54,7 @@ public class RequestProjectActivity extends AppCompatActivity {
                     }
                 }
         );
+        Toast.makeText(this, "request sent successfully", Toast.LENGTH_LONG).show();
         Intent i = new Intent(this, ProjectProfileActivity.class);
         startActivity(i);
         finish();

@@ -2,6 +2,7 @@ package com.example.schedulegenerator.Controllers;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -14,6 +15,7 @@ import com.example.schedulegenerator.Model.Project;
 import com.example.schedulegenerator.Model.Request;
 import com.example.schedulegenerator.Model.User;
 import com.example.schedulegenerator.R;
+import com.example.schedulegenerator.RequestRecycler.RequestAdapter;
 import com.example.schedulegenerator.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,6 +66,7 @@ public class ProjectProfileActivity extends AppCompatActivity {
         mData = new ArrayList<Request>();
 
         setUpTheButtonsAndTexts();
+        seeAllRequests();
     }
 
     private void setUpTheButtonsAndTexts()
@@ -102,7 +105,7 @@ public class ProjectProfileActivity extends AppCompatActivity {
         finish();
     }
 
-    public void seeAllRequests(View v)
+    public void seeAllRequests()
     {
         mStore.collection(Constants.RQ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -112,8 +115,11 @@ public class ProjectProfileActivity extends AppCompatActivity {
                     for (QueryDocumentSnapshot eachDoc : task.getResult())
                     {
                         Request eachRq = eachDoc.toObject(Request.class);
-
+                        mData.add(eachRq);
                     }
+                    RequestAdapter adapter = new RequestAdapter(mData, getBaseContext());
+                    recycler.setAdapter(adapter);
+                    recycler.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                 }
             }
         });

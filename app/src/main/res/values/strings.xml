@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Schedule Generator</string>
+
+    <string-array name= "shared">
+        <item>Public</item>
+        <item>Private</item>
+    </string-array>
 </resources>
