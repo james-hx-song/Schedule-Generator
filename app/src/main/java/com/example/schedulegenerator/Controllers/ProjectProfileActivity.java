@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.usage.ConfigurationStats;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -123,6 +124,18 @@ public class ProjectProfileActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
+
+    public void editTheInfo(View v)
+    {
+        Intent editProject = new Intent(this, EditProjectActivity.class);
+        Intent i = getIntent();
+        editProject.putExtra(Constants.NAME, i.getStringExtra(Constants.NAME));
+        editProject.putExtra(Constants.ID, i.getStringExtra(Constants.ID));
+        editProject.putExtra(Constants.SIZE, i.getStringExtra(Constants.SIZE));
+        editProject.putExtra(Constants.STATUS, i.getStringExtra(Constants.STATUS));
+        startActivity(editProject);
+    }
+
+
 }
