@@ -53,9 +53,9 @@ public class projectAdapter extends RecyclerView.Adapter<projectViewHolder>{
                 Intent i = new Intent(context, ProjectProfileActivity.class);
                 i.putExtra(Constants.ID, projectNow.getProjectID());
                 i.putExtra(Constants.NAME, projectNow.getName());
-                i.putExtra(Constants.OPEN, projectNow.isOpen());
+                i.putExtra(Constants.OPEN, String.valueOf(projectNow.isOpen()));
                 i.putExtra(Constants.STATUS, projectNow.getStatus());
-                i.putExtra(Constants.SIZE, projectNow.getCapacity());
+                i.putExtra(Constants.SIZE, String.valueOf(projectNow.getCapacity()));
                 i.putExtra(Constants.ID, projectNow.getProjectID());
                 context.startActivity(i);
             }

@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ScheduleGenerator">
-        <activity android:name=".Controllers.EditProjectActivity"></activity>
+        <activity android:name=".Controllers.RequestProfileActivity"></activity>
+        <activity android:name=".Controllers.EditProjectActivity" />
         <activity android:name=".Controllers.RequestProjectActivity" />
         <activity android:name=".Controllers.ProjectProfileActivity" />
         <activity android:name=".Controllers.SignUpActivity" />
-        <activity android:name=".Controllers.UserProfileActivity" />
         <activity android:name=".Controllers.AddProjectActivity" />
         <activity android:name=".Controllers.AuthActivity">
             <intent-filter>

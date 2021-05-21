@@ -59,7 +59,14 @@ public class ProjectProfileActivity extends AppCompatActivity {
         name.setText(i.getStringExtra(Constants.NAME));
         status.setText(i.getStringExtra(Constants.STATUS));
         capacity.setText(String.valueOf(i.getIntExtra(Constants.SIZE, 0)));
-        open.setText(i.getStringExtra(Constants.OPEN));
+        if (i.getStringExtra(Constants.OPEN).equals(Constants.TRUE))
+        {
+            open.setText(Constants.PUBLIC);
+        }
+        else
+        {
+            open.setText(Constants.PRIVATE);
+        }
 
         mStore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -132,7 +139,7 @@ public class ProjectProfileActivity extends AppCompatActivity {
         Intent i = getIntent();
         editProject.putExtra(Constants.NAME, i.getStringExtra(Constants.NAME));
         editProject.putExtra(Constants.ID, i.getStringExtra(Constants.ID));
-        editProject.putExtra(Constants.SIZE, i.getStringExtra(Constants.SIZE));
+        editProject.putExtra(Constants.SIZE, String.valueOf(i.getStringExtra(Constants.SIZE)));
         editProject.putExtra(Constants.STATUS, i.getStringExtra(Constants.STATUS));
         startActivity(editProject);
     }

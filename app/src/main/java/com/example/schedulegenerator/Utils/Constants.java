@@ -14,5 +14,7 @@ public class Constants {
     public static final String PUBLIC = "Public";
     public static final String PRIVATE = "Private";
 
+    public static final String TRUE = "true";
+
 
 }

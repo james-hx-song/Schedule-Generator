@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.schedulegenerator.R;
 
-public class UserProfileActivity extends AppCompatActivity {
+public class RequestProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.activity_request_profile);
     }
 }
