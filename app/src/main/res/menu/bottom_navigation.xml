@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_baseline_assignment_ind_24"
+        android:title="Profile"/>
+    <item
+        android:id="@+id/nav_project"
+        android:icon="@drawable/ic_baseline_document_scanner_24"
+        android:title="Project" />
+    <item
+        android:id="@+id/nav_request"
+        android:icon="@drawable/ic_baseline_question_answer_24"
+        android:title="Requests"/>
+
+</menu>

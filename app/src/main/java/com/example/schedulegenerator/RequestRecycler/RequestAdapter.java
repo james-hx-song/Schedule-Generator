@@ -1,6 +1,7 @@
 package com.example.schedulegenerator.RequestRecycler;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.schedulegenerator.Controllers.RequestProfileActivity;
 import com.example.schedulegenerator.Model.Request;
 import com.example.schedulegenerator.R;
+import com.example.schedulegenerator.Utils.Constants;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
         holder.requestName.setText(mData.get(position).getRequesterName());
         String status = mData.get(position).isApproved() ? "approved" : "not approved";
         holder.status.setText(status);
+        holder.getLayout().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Request requestNow = mData.get(position);
+                Intent i = new Intent(mContext, RequestProfileActivity.class);
+                i.putExtra(Constants.ID, requestNow.getProjectID());
+                mContext.startActivity(i);
+            }
+        });
     }
 
     @Override

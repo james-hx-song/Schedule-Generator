@@ -6,6 +6,15 @@ public class Request {
     private String projectID;
     private String requestMsg;
     private boolean isApproved;
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public Request()
     {
@@ -38,12 +47,13 @@ public class Request {
 
 
 
-    public Request(String requesterID, String projectID, String requestMsg, String requesterName, boolean isApproved) {
+    public Request(String requesterID, String projectID, String requestMsg, String requesterName, boolean isApproved, boolean isChecked) {
         this.requesterID = requesterID;
         this.projectID = projectID;
         this.requestMsg = requestMsg;
         this.requesterName = requesterName;
         this.isApproved = isApproved;
+        this.isChecked = isChecked;
     }
 
     public boolean isApproved() {

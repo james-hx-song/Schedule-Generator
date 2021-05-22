@@ -48,7 +48,7 @@ public class RequestProjectActivity extends AppCompatActivity {
                             String userName = task.getResult().toObject(User.class).getName();
                             String projectID = getIntent().getStringExtra(Constants.ID);
                             Request newRq = new Request(mAuth.getUid(), projectID
-                                    , reqMsg.getText().toString(), userName, false);
+                                    , reqMsg.getText().toString(), userName, false, false);
                             mStore.collection(Constants.RQ).document(projectID).set(newRq);
                         }
                     }
