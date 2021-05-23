@@ -6,6 +6,8 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,15 +18,18 @@ import com.example.schedulegenerator.R;
 import com.example.schedulegenerator.Utils.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class projectAdapter extends RecyclerView.Adapter<projectViewHolder>{
+public class projectAdapter extends RecyclerView.Adapter<projectViewHolder> implements Filterable {
 
     private ArrayList<Project> mData;
+    private ArrayList<Project> mDataFull;
     private Context context;
     public projectAdapter(ArrayList data, Context context)
     {
         this.mData = data;
         this.context = context;
+        mDataFull = new ArrayList<>(mData);
     }
 
     public void clear()
@@ -66,4 +71,45 @@ public class projectAdapter extends RecyclerView.Adapter<projectViewHolder>{
     public int getItemCount() {
         return mData.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private Filter mFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            ArrayList<Project> filteredList = new ArrayList<>();
+
+            if (charSequence == null || charSequence.length() == 0)
+            {
+                filteredList.addAll(mDataFull);
+            }
+            else
+            {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (Project eachProject : mDataFull)
+                {
+                    if (eachProject.getName().toLowerCase().contains(filterPattern))
+                    {
+                        filteredList.add(eachProject);
+                    }
+                }
+            }
+            FilterResults result = new FilterResults();
+            result.values = filteredList;
+
+            return result;
+        }
+
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            mData.clear();
+            mData.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 }

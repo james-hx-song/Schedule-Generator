@@ -7,7 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
 
 import com.example.schedulegenerator.Model.Project;
 import com.example.schedulegenerator.R;
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Project> allProjects;
     private RecyclerView projectRecycler;
+    private projectAdapter adapter;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
@@ -60,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
                             allProjects.add(currProject);
                         }
                     }
-                    projectAdapter mAdapter = new projectAdapter(allProjects, getBaseContext());
-                    projectRecycler.setAdapter(mAdapter);
+                    adapter = new projectAdapter(allProjects, getBaseContext());
+                    projectRecycler.setAdapter(adapter);
                     projectRecycler.setLayoutManager(new LinearLayoutManager(getBaseContext()));
 
                 }
@@ -73,6 +79,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void user(View v)
+    {
+        Intent i = new Intent(this, UserProfileActivity.class);
+        startActivity(i);
+        finish();
     }
 
     public void refresh(View v)
@@ -95,4 +108,29 @@ public class MainActivity extends AppCompatActivity {
         Intent goBacktoAuth = new Intent(this, AuthActivity.class);
         startActivity(goBacktoAuth);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }

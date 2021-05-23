@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.schedulegenerator.Model.Project;
 import com.example.schedulegenerator.R;
@@ -19,7 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class EditProjectActivity extends AppCompatActivity {
+public class EditProjectActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText name, status, capacity;
 
@@ -39,7 +40,7 @@ public class EditProjectActivity extends AppCompatActivity {
                 R.array.shared2, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         openSpinner.setAdapter(adapter);
-        openSpinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        openSpinner.setOnItemSelectedListener(this);
 
         firestore = FirebaseFirestore.getInstance();
         setUpTexts();
@@ -73,10 +74,23 @@ public class EditProjectActivity extends AppCompatActivity {
                             open, previousProject.getProjectID(), size,
                             stats, theName);
                     firestore.collection(Constants.PROJECT).document(ID).set(newProject);
+                    Toast.makeText(getBaseContext(), "Update successful", Toast.LENGTH_LONG).show();
                 }
             }
         });
+        Intent goBack = new Intent(this, MainActivity.class);
+        startActivity(goBack);
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

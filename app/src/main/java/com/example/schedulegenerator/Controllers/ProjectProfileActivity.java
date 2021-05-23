@@ -58,7 +58,7 @@ public class ProjectProfileActivity extends AppCompatActivity {
         Intent i = getIntent();
         name.setText(i.getStringExtra(Constants.NAME));
         status.setText(i.getStringExtra(Constants.STATUS));
-        capacity.setText(String.valueOf(i.getIntExtra(Constants.SIZE, 0)));
+        capacity.setText(String.valueOf(i.getStringExtra(Constants.SIZE)));
         if (i.getStringExtra(Constants.OPEN).equals(Constants.TRUE))
         {
             open.setText(Constants.PUBLIC);
