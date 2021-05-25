@@ -9,17 +9,23 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.schedulegenerator.Model.Project;
 import com.example.schedulegenerator.Model.Request;
 import com.example.schedulegenerator.R;
 import com.example.schedulegenerator.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class RequestProfileActivity extends AppCompatActivity {
 
     private TextView nameID, msgID;
+
+    private FirebaseAuth firebaseAuth;
 
     private FirebaseFirestore firestore;
 
@@ -32,6 +38,7 @@ public class RequestProfileActivity extends AppCompatActivity {
         msgID = findViewById(R.id.msgID);
 
         firestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         changeInformation();
 
@@ -68,6 +75,20 @@ public class RequestProfileActivity extends AppCompatActivity {
                             currentRQ.setApproved(true);
                             currentRQ.setApproved(true);
                             firestore.collection(Constants.RQ).document(currentRQ.getProjectID()).set(currentRQ);
+                        }
+                    }
+                });
+        firestore.collection(Constants.PROJECT).document(getIntent().getStringExtra(Constants.ID)).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            Project currentProject = task.getResult().toObject(Project.class);
+                            ArrayList<String> currList = currentProject.getCollaborators();
+                            currList.add(firebaseAuth.getUid());
+                            currentProject.setCollaborators(currList);
+                            firestore.collection(Constants.PROJECT).document(currentProject.getProjectID()).set(currentProject);
                         }
                     }
                 });

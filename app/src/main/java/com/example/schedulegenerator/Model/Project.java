@@ -12,6 +12,7 @@ public class Project {
     private int capacity;
     private String status;
     private String name;
+    private String owner;
 
 
 
@@ -22,6 +23,7 @@ public class Project {
         capacity = 0;
         status = "default";
         name = "default";
+        owner = "default";
     }
 
     public Project(ArrayList<String> collaborators, boolean open, String projectID,
@@ -32,6 +34,7 @@ public class Project {
         this.capacity = capacity;
         this.status = status;
         this.name = name;
+        this.owner = collaborators.get(0);
     }
 
     public ArrayList<String> getCollaborators() {
@@ -79,5 +82,9 @@ public class Project {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getOwner() {
+        return owner;
     }
 }
