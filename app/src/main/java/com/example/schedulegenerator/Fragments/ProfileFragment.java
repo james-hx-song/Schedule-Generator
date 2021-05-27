@@ -62,16 +62,19 @@ public class ProfileFragment extends Fragment {
                             name.setText(currentUser.getName());
                             email.setText(currentUser.getEmail());
                             role.setText(currentUser.getRole());
+                            StorageReference ref = storageReference.child("images/" + currentUser.getImgID());
+                            if (ref != null)
+                            {
+                                GlideApp.with(getContext()).
+                                        load(ref).placeholder(R.drawable.profiledefault)
+                                        .into(getImg);
+                            }
                         }
                     }
                 }
         );
 
-        StorageReference ref = storageReference.child("images/" + firebaseAuth.getUid());
-        if (ref != null)
-        {
-            GlideApp.with(getContext()).load(ref).placeholder(R.drawable.profiledefault).into(getImg);
-        }
+
     }
 
 

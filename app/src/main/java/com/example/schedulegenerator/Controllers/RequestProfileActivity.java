@@ -73,7 +73,7 @@ public class RequestProfileActivity extends AppCompatActivity {
                         {
                             Request currentRQ = task.getResult().toObject(Request.class);
                             currentRQ.setApproved(true);
-                            currentRQ.setApproved(true);
+                            currentRQ.setChecked(true);
                             firestore.collection(Constants.RQ).document(currentRQ.getProjectID()).set(currentRQ);
                         }
                     }

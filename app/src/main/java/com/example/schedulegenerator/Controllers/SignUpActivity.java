@@ -32,6 +32,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText userEmail;
@@ -154,14 +155,14 @@ public class SignUpActivity extends AppCompatActivity {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/" + mAuth.getUid());
+            StorageReference ref = storageReference.child("images/" + getCurrentUser().getImgID());
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             Toast.makeText(SignUpActivity.this,
-                                    "Uploaded", Toast.LENGTH_SHORT).show();
+                                    "Sign up successful", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -187,7 +188,8 @@ public class SignUpActivity extends AppCompatActivity {
     {
         ArrayList<String> newArrayList = new ArrayList<String>();
         User currentUser = new User(mAuth.getUid(), userRealName.getText().toString(),
-                userEmail.getText().toString(), newArrayList, "default");
+                userEmail.getText().toString(), newArrayList, "default",
+                UUID.randomUUID().toString());
         return currentUser;
     }
 }

@@ -60,7 +60,7 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
     @Override
     public void onBindViewHolder(@NonNull CollabViewHolder holder, int position) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference ref = storageReference.child("images/" + mData.get(position).getUid());
+        StorageReference ref = storageReference.child("images/" + mData.get(position).getImgID());
         holder.name.setText(mData.get(position).getName());
         GlideApp.with(context)
                 .load(ref)

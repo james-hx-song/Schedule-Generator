@@ -59,13 +59,18 @@ public class ProjectProfileActivity extends AppCompatActivity {
         name.setText(i.getStringExtra(Constants.NAME));
         status.setText(i.getStringExtra(Constants.STATUS));
         capacity.setText(String.valueOf(i.getStringExtra(Constants.SIZE)));
-        if (i.getStringExtra(Constants.OPEN).equals(Constants.TRUE))
+        String openOrNot = i.getStringExtra(Constants.OPEN);
+        if (openOrNot != null && openOrNot.equals(Constants.TRUE))
         {
             open.setText(Constants.PUBLIC);
         }
-        else
+        else if (!openOrNot.equals(Constants.TRUE))
         {
             open.setText(Constants.PRIVATE);
+        }
+        else
+        {
+            open.setText("null");
         }
 
         mStore = FirebaseFirestore.getInstance();
@@ -102,6 +107,15 @@ public class ProjectProfileActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+
+    public void seeCollab(View v)
+    {
+        Intent i = new Intent(this, CollabActivity.class);
+        i.putExtra(Constants.ID, getIntent().getStringExtra(Constants.ID));
+        startActivity(i);
+        finish();
     }
 
     public void sendRequest(View v)

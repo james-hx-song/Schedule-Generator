@@ -9,17 +9,27 @@ public class User {
     private String email;
     private ArrayList<String> projectList;
     private String role;
+    private String imgID;
 
     public User()
     {
 
     }
-    public User(String uid, String name, String email, ArrayList<String> projectList, String role) {
+    public User(String uid, String name, String email, ArrayList<String> projectList, String role, String imgID) {
         this.uid = uid;
         this.name = name;
         this.email = email;
         this.projectList = projectList;
         this.role = role;
+        this.imgID = imgID;
+    }
+
+    public String getImgID() {
+        return imgID;
+    }
+
+    public void setImgID(String imgID) {
+        this.imgID = imgID;
     }
 
     public String getUid() {

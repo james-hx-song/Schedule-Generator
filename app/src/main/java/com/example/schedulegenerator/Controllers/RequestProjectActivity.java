@@ -55,7 +55,7 @@ public class RequestProjectActivity extends AppCompatActivity {
                 }
         );
         Toast.makeText(this, "request sent successfully", Toast.LENGTH_LONG).show();
-        Intent i = new Intent(this, ProjectProfileActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }
