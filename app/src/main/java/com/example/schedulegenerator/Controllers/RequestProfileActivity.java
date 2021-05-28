@@ -86,13 +86,15 @@ public class RequestProfileActivity extends AppCompatActivity {
                         {
                             Project currentProject = task.getResult().toObject(Project.class);
                             ArrayList<String> currList = currentProject.getCollaborators();
-                            currList.add(firebaseAuth.getUid());
+                            currList.add(getIntent().getStringExtra(Constants.USER));
                             currentProject.setCollaborators(currList);
                             firestore.collection(Constants.PROJECT).document(currentProject.getProjectID()).set(currentProject);
                         }
                     }
                 });
         Toast.makeText(this, "The request is approved", Toast.LENGTH_LONG).show();
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
     public void disapprove(View v)
@@ -104,13 +106,15 @@ public class RequestProfileActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                             Request currentRQ = task.getResult().toObject(Request.class);
-                            currentRQ.setApproved(true);
+                            currentRQ.setApproved(false);
                             currentRQ.setChecked(true);
                             firestore.collection(Constants.RQ).document(currentRQ.getProjectID()).set(currentRQ);
                         }
                     }
                 });
-        Toast.makeText(this, "The request is approved", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "The request is rejected", Toast.LENGTH_LONG).show();
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
 

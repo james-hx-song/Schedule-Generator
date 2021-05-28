@@ -33,7 +33,7 @@ public class ProjectProfileActivity extends AppCompatActivity {
 
     private TextView name, status, capacity, open, sendRq;
 
-    private Button request, editInfo;
+    private Button request, editInfo, seeCollab;
 
     private RecyclerView recycler;
 
@@ -54,23 +54,20 @@ public class ProjectProfileActivity extends AppCompatActivity {
         editInfo = findViewById(R.id.editBtn);
         sendRq = findViewById(R.id.textViewRq);
         recycler = findViewById(R.id.RequestRecycler);
+        seeCollab = findViewById(R.id.SeeCollab);
 
         Intent i = getIntent();
         name.setText(i.getStringExtra(Constants.NAME));
         status.setText(i.getStringExtra(Constants.STATUS));
         capacity.setText(String.valueOf(i.getStringExtra(Constants.SIZE)));
-        String openOrNot = i.getStringExtra(Constants.OPEN);
-        if (openOrNot != null && openOrNot.equals(Constants.TRUE))
+        Boolean openOrNot = i.getBooleanExtra(Constants.OPEN, false);
+        if (openOrNot)
         {
             open.setText(Constants.PUBLIC);
         }
-        else if (!openOrNot.equals(Constants.TRUE))
-        {
-            open.setText(Constants.PRIVATE);
-        }
         else
         {
-            open.setText("null");
+            open.setText(Constants.PRIVATE);
         }
 
         mStore = FirebaseFirestore.getInstance();
@@ -103,9 +100,24 @@ public class ProjectProfileActivity extends AppCompatActivity {
                                 request.setVisibility(View.GONE);
                                 sendRq.setVisibility(View.GONE);
                             }
+
                         }
                     }
                 });
+        mStore.collection(Constants.PROJECT).document(getIntent().getStringExtra(Constants.ID))
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful())
+                {
+                    Project currProject = task.getResult().toObject(Project.class);
+                    if (!currProject.getOwner().equals(mAuth.getUid()))
+                    {
+                        seeCollab.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
 
     }
 

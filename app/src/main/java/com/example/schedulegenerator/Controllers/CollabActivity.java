@@ -37,7 +37,7 @@ public class CollabActivity extends AppCompatActivity {
         setContentView(R.layout.activity_collab);
 
         collabRecycler = findViewById(R.id.collabRecycler);
-         mData = new ArrayList<>();
+        mData = new ArrayList<>();
 
 
         fireStore = FirebaseFirestore.getInstance();

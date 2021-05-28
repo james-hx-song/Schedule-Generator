@@ -52,7 +52,7 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
     @Override
     public CollabViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View myView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.project_row_layout, parent, false);
+                .inflate(R.layout.collab_row_layout, parent, false);
         CollabViewHolder holder = new CollabViewHolder(myView);
         return holder;
     }

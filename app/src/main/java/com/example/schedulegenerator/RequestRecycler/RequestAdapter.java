@@ -47,6 +47,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
                 Request requestNow = mData.get(position);
                 Intent i = new Intent(mContext, RequestProfileActivity.class);
                 i.putExtra(Constants.ID, requestNow.getProjectID());
+                i.putExtra(Constants.USER, requestNow.getRequesterID());
                 mContext.startActivity(i);
             }
         });

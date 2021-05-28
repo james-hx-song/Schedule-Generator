@@ -170,7 +170,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
                             Toast.makeText(SignUpActivity.this,
-                                    "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    "Imaged upload failure", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -189,7 +189,7 @@ public class SignUpActivity extends AppCompatActivity {
         ArrayList<String> newArrayList = new ArrayList<String>();
         User currentUser = new User(mAuth.getUid(), userRealName.getText().toString(),
                 userEmail.getText().toString(), newArrayList, "default",
-                UUID.randomUUID().toString());
+                userRealName.getText().toString() + userPassword.getText().toString());
         return currentUser;
     }
 }
