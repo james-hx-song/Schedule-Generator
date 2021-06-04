@@ -13,6 +13,7 @@ import com.example.schedulegenerator.Controllers.RequestProfileActivity;
 import com.example.schedulegenerator.Model.Request;
 import com.example.schedulegenerator.R;
 import com.example.schedulegenerator.Utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
         holder.requestName.setText(mData.get(position).getRequesterName());
         String status = mData.get(position).isApproved() ? "approved" : "not approved";
         holder.status.setText(status);
+        String UID = FirebaseAuth.getInstance().getUid();
         holder.getLayout().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

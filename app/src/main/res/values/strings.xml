@@ -10,4 +10,9 @@
         <item>Public</item>
         <item>Private</item>
     </string-array>
+
+    <string-array name="role">
+        <item>Administrator</item>
+        <item>Teacher</item>
+    </string-array>
 </resources>

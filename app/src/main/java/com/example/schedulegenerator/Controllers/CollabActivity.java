@@ -67,6 +67,11 @@ public class CollabActivity extends AppCompatActivity {
                                             }
                                         });
                             }
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             CollabAdapter adapter = new CollabAdapter(mData, getBaseContext(), projectID);
                             collabRecycler.setAdapter(adapter);
                             collabRecycler.setLayoutManager(new LinearLayoutManager(getBaseContext()));

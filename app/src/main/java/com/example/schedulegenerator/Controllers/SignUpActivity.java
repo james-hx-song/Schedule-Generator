@@ -72,9 +72,11 @@ public class SignUpActivity extends AppCompatActivity {
         if (email.isEmpty()) {
             Toast.makeText(getApplicationContext(), "please enter email address", Toast.LENGTH_SHORT)
                     .show();
+            updateUI(null);
         } else if (!email.matches(emailPattern)) {
             Toast.makeText(getApplicationContext(), "invalid email address", Toast.LENGTH_SHORT)
                     .show();
+            updateUI(null);
         } else
         {
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -85,10 +87,8 @@ public class SignUpActivity extends AppCompatActivity {
                             {
                                 String userID = getCurrentUser().getUid();
                                 fireStore.collection(Constants.USER).document(userID).set(
-                                        getCurrentUser()
-                                );
-                                Intent i = new Intent(getBaseContext(), MainActivity.class);
-                                startActivity(i);
+                                        getCurrentUser());
+                                updateUI(mAuth.getCurrentUser());
                             }
                         }
                     });
@@ -96,6 +96,14 @@ public class SignUpActivity extends AppCompatActivity {
         uploadImage();
     }
 
+    private void updateUI(FirebaseUser firebaseUser)
+    {
+        if (firebaseUser != null)
+        {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        }
+    }
     public void selectImage(View v)
     {
         Intent intent = new Intent();

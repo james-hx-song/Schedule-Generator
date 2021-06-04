@@ -2,6 +2,7 @@ package com.example.schedulegenerator.CollabRecycler;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
     private ArrayList<User> mData;
     private Context context;
     private String projectID;
+
     public CollabAdapter(ArrayList data, Context context, String projectID)
     {
         this.mData = data;
@@ -59,6 +61,7 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
 
     @Override
     public void onBindViewHolder(@NonNull CollabViewHolder holder, int position) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference ref = storageReference.child("images/" + mData.get(position).getImgID());
         holder.name.setText(mData.get(position).getName());
@@ -66,6 +69,10 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
                 .load(ref)
                 .placeholder(R.drawable.profiledefault)
                 .into(holder.collabImg);
+        if (mData.get(position).getUid().equals(mAuth.getUid()))
+        {
+            holder.removeBtn.setVisibility(View.GONE);
+        }
         holder.removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

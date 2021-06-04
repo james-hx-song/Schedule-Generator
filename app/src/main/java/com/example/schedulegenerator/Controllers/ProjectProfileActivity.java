@@ -148,8 +148,11 @@ public class ProjectProfileActivity extends AppCompatActivity {
                 {
                     for (QueryDocumentSnapshot eachDoc : task.getResult())
                     {
-                        Request eachRq = eachDoc.toObject(Request.class);
-                        mData.add(eachRq);
+                        if (!eachDoc.toObject(Request.class).isChecked())
+                        {
+                            Request eachRq = eachDoc.toObject(Request.class);
+                            mData.add(eachRq);
+                        }
                     }
                     RequestAdapter adapter = new RequestAdapter(mData, getBaseContext());
                     recycler.setAdapter(adapter);
