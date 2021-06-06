@@ -10,8 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.schedulegenerator.Model.User;
@@ -34,11 +37,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private EditText userEmail;
     private EditText userPassword;
     private EditText userRealName;
     private ImageView imageView;
+    private Spinner userRole;
     private final int PICK_IMAGE_REQUEST = 22;
 
     private Uri filePath;
@@ -60,6 +64,12 @@ public class SignUpActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.password);
         userRealName = findViewById(R.id.realName);
         imageView = findViewById(R.id.profilePic);
+        userRole = findViewById(R.id.user_role);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.role, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userRole.setAdapter(adapter);
+        userRole.setOnItemSelectedListener(this);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -101,6 +111,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (firebaseUser != null)
         {
             Intent i = new Intent(this, MainActivity.class);
+            i.putExtra(Constants.ROLE, userRole.getSelectedItem().toString());
             startActivity(i);
         }
     }
@@ -195,9 +206,23 @@ public class SignUpActivity extends AppCompatActivity {
     private User getCurrentUser()
     {
         ArrayList<String> newArrayList = new ArrayList<String>();
+        String role = userRole.getSelectedItem().toString();
         User currentUser = new User(mAuth.getUid(), userRealName.getText().toString(),
-                userEmail.getText().toString(), newArrayList, "default",
+                userEmail.getText().toString(), newArrayList, role,
                 userRealName.getText().toString() + userPassword.getText().toString());
         return currentUser;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        String text = "Choose a role!";
+        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 }

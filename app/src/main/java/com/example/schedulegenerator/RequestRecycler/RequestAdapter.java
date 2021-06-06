@@ -43,16 +43,19 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
         String status = mData.get(position).isApproved() ? "approved" : "not approved";
         holder.status.setText(status);
         String UID = FirebaseAuth.getInstance().getUid();
-        holder.getLayout().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Request requestNow = mData.get(position);
-                Intent i = new Intent(mContext, RequestProfileActivity.class);
-                i.putExtra(Constants.ID, requestNow.getProjectID());
-                i.putExtra(Constants.USER, requestNow.getRequesterID());
-                mContext.startActivity(i);
-            }
-        });
+        if (!UID.equals(mData.get(position).getRequesterID()) && !mData.get(position).isChecked())
+        {
+            holder.getLayout().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Request requestNow = mData.get(position);
+                    Intent i = new Intent(mContext, RequestProfileActivity.class);
+                    i.putExtra(Constants.ID, requestNow.getProjectID());
+                    i.putExtra(Constants.USER, requestNow.getRequesterID());
+                    mContext.startActivity(i);
+                }
+            });
+        }
     }
 
     @Override

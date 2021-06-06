@@ -15,4 +15,11 @@
         <item>Administrator</item>
         <item>Teacher</item>
     </string-array>
+
+    <string-array name="status">
+        <item>initiation</item>
+        <item>planning</item>
+        <item>execution</item>
+        <item>closure</item>
+    </string-array>
 </resources>

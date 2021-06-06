@@ -27,8 +27,8 @@ import java.util.UUID;
 
 public class AddProjectActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private EditText projectName, projectStatus, projectCapacity;
-    private Spinner openSpinner;
+    private EditText projectName, projectCapacity;
+    private Spinner openSpinner, projectStatus;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore fireStore;
@@ -44,7 +44,6 @@ public class AddProjectActivity extends AppCompatActivity implements AdapterView
 
 
         projectName = findViewById(R.id.ProjectName);
-        projectStatus = findViewById(R.id.projectStage);
         projectCapacity = findViewById(R.id.projectSize);
 
 
@@ -55,6 +54,13 @@ public class AddProjectActivity extends AppCompatActivity implements AdapterView
         openSpinner.setAdapter(adapter);
         openSpinner.setOnItemSelectedListener(this);
 
+        projectStatus = findViewById(R.id.StatusSpinner);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+                R.array.status, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        projectStatus.setAdapter(adapter2);
+        projectStatus.setOnItemSelectedListener(this);
+
         collabs = new ArrayList<String>();
         collabs.add(mAuth.getUid());
 
@@ -64,7 +70,7 @@ public class AddProjectActivity extends AppCompatActivity implements AdapterView
     {
         String projectID = UUID.randomUUID().toString();
         String name = projectName.getText().toString();
-        String status = projectStatus.getText().toString();
+        String status = projectStatus.getSelectedItem().toString();
         String shared = openSpinner.getSelectedItem().toString();
         boolean open = shared.equals(Constants.PUBLIC) ? true : false;
         int size = Integer.parseInt(projectCapacity.getText().toString());
@@ -92,6 +98,8 @@ public class AddProjectActivity extends AppCompatActivity implements AdapterView
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

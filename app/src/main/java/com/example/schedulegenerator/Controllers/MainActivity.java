@@ -63,16 +63,19 @@ public class MainActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult())
                         {
                             Project currProject = document.toObject(Project.class);
-                            allProjects.add(currProject);
+                            String role = getIntent().getStringExtra(Constants.ROLE);
+                            if ((currProject.isOpen() || role.equals(Constants.ADMIN)))
+                            {
+                                allProjects.add(currProject);
+                            }
+
                         }
                     }
                     adapter = new projectAdapter(allProjects, getBaseContext());
                     projectRecycler.setAdapter(adapter);
                     projectRecycler.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-
                 }
             });
-
         }
         catch(Exception e)
         {
@@ -94,6 +97,13 @@ public class MainActivity extends AppCompatActivity {
         myAdapter.clear();
         projectRecycler.setAdapter(myAdapter);
         populateData();
+    }
+
+    public void goToSummary(View v)
+    {
+        Intent i = new Intent(this, ProcessProjectActivity.class);
+        startActivity(i);
+        finish();
     }
 
     public void goToAddProject(View v)
