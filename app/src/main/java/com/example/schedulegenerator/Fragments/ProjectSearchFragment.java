@@ -1,6 +1,7 @@
 package com.example.schedulegenerator.Fragments;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -38,6 +40,7 @@ public class ProjectSearchFragment extends Fragment {
     private static final String GROUP_3_LABEL = "execution";
     private static final String GROUP_4_LABEL = "closure";
     private static final int GROUPS = 4;
+    private static final int MAX_X_VALUE = 3;
     private static final float BAR_SPACE = 0.05f;
     private static final float BAR_WIDTH = 0.2f;
     private static final String[] VALUES = {"small", "medium", "large"};
@@ -69,16 +72,21 @@ public class ProjectSearchFragment extends Fragment {
         chart.getDescription().setEnabled(false);
         chart.setDrawValueAboveBar(false);
 
-        chart.getXAxis().setValueFormatter(new ValueFormatter() {
+        /*chart.getXAxis().setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
+                System.out.println((int) value);
                 return VALUES[(int) value];
             }
-        });
+        });*/
+
+        chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(VALUES));
+        chart.getXAxis().setCenterAxisLabels(true);
 
 
         chart.getAxisLeft().setDrawGridLines(false);
         chart.getAxisLeft().setAxisMinimum(0);
+        chart.getAxisLeft().setGranularity(1f);
 
         chart.getAxisRight().setEnabled(false);
     }
@@ -90,9 +98,9 @@ public class ProjectSearchFragment extends Fragment {
         ArrayList<BarEntry> values3 = new ArrayList<>();
         ArrayList<BarEntry> values4 = new ArrayList<>();
 
-        int[] countArray = {0,0,0,0,0,0,0,0,0,0,0,0};
+        //int[] countArray = {0,0,0,0,0,0,0,0,0,0,0,0};
 
-        firestore.collection(Constants.PROJECT).get().addOnCompleteListener
+        /*firestore.collection(Constants.PROJECT).get().addOnCompleteListener
                 (new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -161,18 +169,20 @@ public class ProjectSearchFragment extends Fragment {
                             }
                         }
                     }
-
                 }
             }
         });
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        for (int i = 0; i < 3; i++)
+        int[] countArray = {4, 5, 6, 5, 3, 0, 0, 0, 3, 4, 5, 6};
+
+
+        for (int i = 0; i < MAX_X_VALUE; i++)
         {
             values1.add(new BarEntry(i, countArray[4*i]));
             values2.add(new BarEntry(i, countArray[4*i + 1]));
@@ -203,14 +213,13 @@ public class ProjectSearchFragment extends Fragment {
 
     private void prepareChartData(BarData data)
     {
+        data.setBarWidth(BAR_WIDTH);
         chart.setData(data);
 
-        chart.getBarData().setBarWidth(BAR_WIDTH);
 
         float groupSpace = 1f - ((BAR_SPACE + BAR_WIDTH) * GROUPS);
         chart.groupBars(0, groupSpace, BAR_SPACE);
 
         chart.invalidate();
-
     }
 }
