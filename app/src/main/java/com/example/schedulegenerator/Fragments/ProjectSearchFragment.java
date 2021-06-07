@@ -1,8 +1,6 @@
 package com.example.schedulegenerator.Fragments;
 
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import com.example.schedulegenerator.R;
 import com.example.schedulegenerator.Utils.Constants;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -32,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ProjectSearchFragment extends Fragment {
 
@@ -42,8 +40,11 @@ public class ProjectSearchFragment extends Fragment {
     private static final int GROUPS = 4;
     private static final int MAX_X_VALUE = 3;
     private static final float BAR_SPACE = 0.05f;
-    private static final float BAR_WIDTH = 0.2f;
-    private static final String[] VALUES = {"small", "medium", "large"};
+    private static final float BAR_WIDTH = 0.1f;
+
+    private static int[] helperArray = {0,0,0,0,0,0,0,0,0,0,0,0};
+
+
 
     private FirebaseFirestore firestore;
     private BarChart chart;
@@ -72,25 +73,105 @@ public class ProjectSearchFragment extends Fragment {
         chart.getDescription().setEnabled(false);
         chart.setDrawValueAboveBar(false);
 
-        /*chart.getXAxis().setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                System.out.println((int) value);
-                return VALUES[(int) value];
-            }
-        });*/
 
-        chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(VALUES));
+
+        String[] VALUES = new String[]{"small", "medium", "large"};
+
+
+
         chart.getXAxis().setCenterAxisLabels(true);
+        chart.getXAxis().setAxisMinimum(0);
+        chart.getXAxis().setGranularity(1f);
+        chart.getXAxis().setGranularityEnabled(true);
+        chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(VALUES));
+
+        chart.setDragEnabled(true);
 
 
         chart.getAxisLeft().setDrawGridLines(false);
-        chart.getAxisLeft().setAxisMinimum(0);
+        chart.getAxisLeft().setAxisMinimum(0f);
         chart.getAxisLeft().setGranularity(1f);
 
         chart.getAxisRight().setEnabled(false);
     }
 
+    private void createData()
+    {
+        firestore.collection(Constants.PROJECT).get().addOnCompleteListener
+                (new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int[] countArray = {0,0,0,0,0,0,0,0,0,0,0,0};
+                            for (DocumentSnapshot each : task.getResult())
+                            {
+                                Project eachProject = each.toObject(Project.class);
+                                if (eachProject.getCapacity() <= 5)
+                                {
+                                    switch (eachProject.getStatus())
+                                    {
+                                        case "initiation":
+                                            countArray[0] += 1;
+                                            break;
+                                        case "planning":
+                                            countArray[1] += 1;
+                                            break;
+                                        case "execution":
+                                            countArray[2] += 1;
+                                            break;
+                                        case "closure":
+                                            countArray[3] += 1;
+                                            break;
+                                        default:
+                                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                if (eachProject.getCapacity() > 5 && eachProject.getCapacity() <= 10)
+                                {
+                                    switch (eachProject.getStatus())
+                                    {
+                                        case "initiation":
+                                            countArray[4] += 1;
+                                            break;
+                                        case "planning":
+                                            countArray[5] += 1;
+                                            break;
+                                        case "execution":
+                                            countArray[6] += 1;
+                                            break;
+                                        case "closure":
+                                            countArray[7] += 1;
+                                            break;
+                                        default:
+                                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                if (eachProject.getCapacity() >= 10)
+                                {
+                                    switch (eachProject.getStatus())
+                                    {
+                                        case "initiation":
+                                            countArray[8] += 1;
+                                            break;
+                                        case "planning":
+                                            countArray[9] += 1;
+                                            break;
+                                        case "execution":
+                                            countArray[10] += 1;
+                                            break;
+                                        case "closure":
+                                            countArray[11] += 1;
+                                            break;
+                                        default:
+                                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                            asyncHelp(countArray);
+                        }
+                    }
+                });
+    }
 
     private BarData createBarChartData()  {
         ArrayList<BarEntry> values1 = new ArrayList<>();
@@ -98,97 +179,22 @@ public class ProjectSearchFragment extends Fragment {
         ArrayList<BarEntry> values3 = new ArrayList<>();
         ArrayList<BarEntry> values4 = new ArrayList<>();
 
-        //int[] countArray = {0,0,0,0,0,0,0,0,0,0,0,0};
 
-        /*firestore.collection(Constants.PROJECT).get().addOnCompleteListener
-                (new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (DocumentSnapshot each : task.getResult())
-                    {
-                        Project eachProject = each.toObject(Project.class);
-                        if (eachProject.getCapacity() <= 5)
-                        {
-                            switch (eachProject.getStatus())
-                            {
-                                case "initiation":
-                                    countArray[0] += 1;
-                                    break;
-                                case "planning":
-                                    countArray[1] += 1;
-                                    break;
-                                case "execution":
-                                    countArray[2] += 1;
-                                    break;
-                                case "closure":
-                                    countArray[3] += 1;
-                                    break;
-                                default:
-                                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        if (eachProject.getCapacity() > 5 && eachProject.getCapacity() <= 10)
-                        {
-                            switch (eachProject.getStatus())
-                            {
-                                case "initiation":
-                                    countArray[4] += 1;
-                                    break;
-                                case "planning":
-                                    countArray[5] += 1;
-                                    break;
-                                case "execution":
-                                    countArray[6] += 1;
-                                    break;
-                                case "closure":
-                                    countArray[7] += 1;
-                                    break;
-                                default:
-                                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        if (eachProject.getCapacity() >= 10)
-                        {
-                            switch (eachProject.getStatus())
-                            {
-                                case "initiation":
-                                    countArray[8] += 1;
-                                    break;
-                                case "planning":
-                                    countArray[9] += 1;
-                                    break;
-                                case "execution":
-                                    countArray[10] += 1;
-                                    break;
-                                case "closure":
-                                    countArray[11] += 1;
-                                    break;
-                                default:
-                                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                }
-            }
-        });
+        createData();
 
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-
-        int[] countArray = {4, 5, 6, 5, 3, 0, 0, 0, 3, 4, 5, 6};
+        int [] helperArray2 = {1, 2, 3, 5, 6, 4, 2, 3, 5, 6, 10, 10};
+        helperArray = helperArray2;
 
 
         for (int i = 0; i < MAX_X_VALUE; i++)
         {
-            values1.add(new BarEntry(i, countArray[4*i]));
-            values2.add(new BarEntry(i, countArray[4*i + 1]));
-            values3.add(new BarEntry(i, countArray[4*i + 2]));
-            values4.add(new BarEntry(i, countArray[4*i + 3]));
+            values1.add(new BarEntry(i, helperArray[4*i]));
+            values2.add(new BarEntry(i, helperArray[4*i + 1]));
+            values3.add(new BarEntry(i, helperArray[4*i + 2]));
+            values4.add(new BarEntry(i, helperArray[4*i + 3]));
         }
+
+
 
         BarDataSet set1 = new BarDataSet(values1, GROUP_1_LABEL);
         BarDataSet set2 = new BarDataSet(values2, GROUP_2_LABEL);
@@ -211,6 +217,12 @@ public class ProjectSearchFragment extends Fragment {
         return data;
     }
 
+    private void asyncHelp(int[] helperArr)
+    {
+        helperArray = helperArr;
+    }
+
+
     private void prepareChartData(BarData data)
     {
         data.setBarWidth(BAR_WIDTH);
@@ -219,6 +231,8 @@ public class ProjectSearchFragment extends Fragment {
 
         float groupSpace = 1f - ((BAR_SPACE + BAR_WIDTH) * GROUPS);
         chart.groupBars(0, groupSpace, BAR_SPACE);
+        chart.getXAxis().setAxisMaximum(0 + chart.getBarData().getGroupWidth(groupSpace, BAR_SPACE)*3);
+        chart.getAxisLeft().setAxisMinimum(0f);
 
         chart.invalidate();
     }

@@ -58,18 +58,27 @@ public class AuthActivity extends AppCompatActivity {
                                 Toast.makeText(AuthActivity.this,
                                         "successfully signed in the user",
                                         Toast.LENGTH_LONG).show();
-                                Intent i = new Intent(getBaseContext(), MainActivity.class);
-                                startActivity(i);
+                                updateUI(mAuth.getCurrentUser());
                             }
                             else
                             {
                                 Toast.makeText(AuthActivity.this, "Authentification failed"
                                                 + task.getException().toString(),
                                         Toast.LENGTH_SHORT).show();
-
+                                updateUI(null);
                             }
                         }
                     });
+        }
+    }
+
+    private void updateUI(FirebaseUser firebaseUser)
+    {
+        if (firebaseUser != null)
+        {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
         }
     }
 
