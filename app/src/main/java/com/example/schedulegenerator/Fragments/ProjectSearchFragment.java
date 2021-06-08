@@ -237,7 +237,21 @@ public class ProjectSearchFragment extends Fragment {
         chart.groupBars(0, groupSpace, BAR_SPACE);
         chart.getXAxis().setAxisMaximum(0 + chart.getBarData().getGroupWidth(groupSpace, BAR_SPACE)*3);
         chart.getAxisLeft().setAxisMinimum(0f);
+        chart.getAxisLeft().setAxisMaximum(2*maxValue(helperArray));
 
         chart.invalidate();
+    }
+
+    private int maxValue(int[] array)
+    {
+        int i = 0;
+        for(int j = 0; j < array.length; j++)
+        {
+            if (array[j] > array[i])
+            {
+                i = j;
+            }
+        }
+        return array[i];
     }
 }
