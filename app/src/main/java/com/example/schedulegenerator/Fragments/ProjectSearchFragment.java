@@ -41,6 +41,7 @@ public class ProjectSearchFragment extends Fragment {
     private static final int MAX_X_VALUE = 3;
     private static final float BAR_SPACE = 0.05f;
     private static final float BAR_WIDTH = 0.1f;
+    private boolean exists = false;
 
     private static int[] helperArray = {0,0,0,0,0,0,0,0,0,0,0,0};
 
@@ -95,8 +96,14 @@ public class ProjectSearchFragment extends Fragment {
         chart.getAxisRight().setEnabled(false);
     }
 
-    private void createData()
-    {
+
+    private BarData createBarChartData() {
+        ArrayList<BarEntry> values1 = new ArrayList<>();
+        ArrayList<BarEntry> values2 = new ArrayList<>();
+        ArrayList<BarEntry> values3 = new ArrayList<>();
+        ArrayList<BarEntry> values4 = new ArrayList<>();
+
+
         firestore.collection(Constants.PROJECT).get().addOnCompleteListener
                 (new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -168,23 +175,20 @@ public class ProjectSearchFragment extends Fragment {
                                 }
                             }
                             asyncHelp(countArray);
+                            exists = true;
+                            System.out.println(exists + "YEET");
                         }
                     }
                 });
-    }
-
-    private BarData createBarChartData()  {
-        ArrayList<BarEntry> values1 = new ArrayList<>();
-        ArrayList<BarEntry> values2 = new ArrayList<>();
-        ArrayList<BarEntry> values3 = new ArrayList<>();
-        ArrayList<BarEntry> values4 = new ArrayList<>();
 
 
-        createData();
-
-        int [] helperArray2 = {1, 2, 3, 5, 6, 4, 2, 3, 5, 6, 10, 10};
-        helperArray = helperArray2;
-
+        int [] helperArray2 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        try {
+            Thread.sleep(10000);
+            Toast.makeText(getContext(), "LOADING", Toast.LENGTH_LONG).show();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         for (int i = 0; i < MAX_X_VALUE; i++)
         {
