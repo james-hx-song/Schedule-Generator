@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,14 +42,15 @@ public class ProjectSearchFragment extends Fragment {
     private static final int MAX_X_VALUE = 3;
     private static final float BAR_SPACE = 0.05f;
     private static final float BAR_WIDTH = 0.1f;
-    private boolean exists = false;
 
     private static int[] helperArray = {0,0,0,0,0,0,0,0,0,0,0,0};
 
 
 
     private FirebaseFirestore firestore;
+
     private BarChart chart;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class ProjectSearchFragment extends Fragment {
         chart = mainView.findViewById(R.id.project_search_barchart);
         firestore = FirebaseFirestore.getInstance();
 
+
         BarData data = createBarChartData();
         configureChartAppearance();
         prepareChartData(data);
@@ -74,11 +77,7 @@ public class ProjectSearchFragment extends Fragment {
         chart.getDescription().setEnabled(false);
         chart.setDrawValueAboveBar(false);
 
-
-
         String[] VALUES = new String[]{"small", "medium", "large"};
-
-
 
         chart.getXAxis().setCenterAxisLabels(true);
         chart.getXAxis().setAxisMinimum(0);
@@ -87,7 +86,6 @@ public class ProjectSearchFragment extends Fragment {
         chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(VALUES));
 
         chart.setDragEnabled(true);
-
 
         chart.getAxisLeft().setDrawGridLines(false);
         chart.getAxisLeft().setAxisMinimum(0f);
@@ -175,21 +173,21 @@ public class ProjectSearchFragment extends Fragment {
                                 }
                             }
                             asyncHelp(countArray);
-                            exists = true;
-                            System.out.println(exists + "YEET");
                         }
                     }
                 });
 
 
-        int [] helperArray2 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         try {
-            Thread.sleep(10000);
             Toast.makeText(getContext(), "LOADING", Toast.LENGTH_LONG).show();
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        int [] helperArray2 = {2, 3, 4, 5, 6, 7, 4, 5, 6, 7, 10, 11};
+
+        helperArray = helperArray2;
         for (int i = 0; i < MAX_X_VALUE; i++)
         {
             values1.add(new BarEntry(i, helperArray[4*i]));
@@ -197,8 +195,6 @@ public class ProjectSearchFragment extends Fragment {
             values3.add(new BarEntry(i, helperArray[4*i + 2]));
             values4.add(new BarEntry(i, helperArray[4*i + 3]));
         }
-
-
 
         BarDataSet set1 = new BarDataSet(values1, GROUP_1_LABEL);
         BarDataSet set2 = new BarDataSet(values2, GROUP_2_LABEL);
