@@ -25,6 +25,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * This activity is for users to add their own projects and upload it onto firebase.
+ */
 public class AddProjectActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText projectName, projectCapacity;
@@ -66,39 +69,75 @@ public class AddProjectActivity extends AppCompatActivity implements AdapterView
 
     }
 
+    /**
+     * Check for userinput on adding project and if valid then upload to firebase
+     * @param v addProject button
+     */
     public void addNewProjects(View v)
     {
+        //getting input from editText
         String projectID = UUID.randomUUID().toString();
         String name = projectName.getText().toString();
         String status = projectStatus.getSelectedItem().toString();
         String shared = openSpinner.getSelectedItem().toString();
         boolean open = shared.equals(Constants.PUBLIC) ? true : false;
-        int size = Integer.parseInt(projectCapacity.getText().toString());
 
-        Project newProject = new Project(collabs, open, projectID, size, status, name);
 
-        fireStore.collection(Constants.PROJECT).document(newProject.getProjectID()).set(newProject);
+        if (inputValid())
+        {
+            int size = Integer.parseInt(projectCapacity.getText().toString());
+            Project newProject = new Project(collabs, open, projectID, size, status, name);
 
-        fireStore.collection(Constants.USER).document(mAuth.getUid()).get().addOnCompleteListener(
-                new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful())
-                        {
-                            DocumentSnapshot ds = task.getResult();
-                            User newUser = ds.toObject(User.class);
-                            newUser.getProjectList().add(projectID);
-                            fireStore.collection(Constants.USER).document(mAuth.getUid()).set(newUser);
-                            Toast.makeText(getBaseContext(), "project successfully added",
-                                    Toast.LENGTH_LONG).show();
+            fireStore.collection(Constants.PROJECT).document(newProject.getProjectID()).set(newProject);
+            //upload to firebase
+            fireStore.collection(Constants.USER).document(mAuth.getUid()).get().addOnCompleteListener(
+                    new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful())
+                            {
+                                DocumentSnapshot ds = task.getResult();
+                                User newUser = ds.toObject(User.class);
+                                newUser.getProjectList().add(projectID);
+                                fireStore.collection(Constants.USER).document(mAuth.getUid()).set(newUser);
+                                Toast.makeText(getBaseContext(), "project successfully added",
+                                        Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
-                }
-        );
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+            );
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        }
     }
 
+    /**
+     * a method that checks if userinput is valid
+     * @return boolean that returns if input is valid
+     */
+    public boolean inputValid()
+    {
+        String name = projectName.getText().toString();
+        String capacity = projectCapacity.getText().toString();
+        //Only this one needs to be checked. The other two variables are obtained through spinner,
+        //so the data will always be valid.
+        if (name.length() == 0 || capacity.length() == 0)
+        {
+            return false;
+        }
+        try
+        {
+            int size = Integer.parseInt(capacity);
+        }
+        catch(Exception e)
+        {
+            Toast.makeText(this, "the capacity entered is not an integer",
+                    Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+
+    }
 
 
     @Override

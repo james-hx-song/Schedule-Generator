@@ -31,6 +31,10 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is the adapter for the collab recyclerview. It provides information for the textviews
+ * and imageview on the cardview.
+ */
 public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
 
     private ArrayList<User> mData;
@@ -44,12 +48,17 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
         this.projectID = projectID;
     }
 
+    /**
+     * clears the recyclerview for updating purposes
+     */
     public void clear()
     {
         int size = mData.size();
         mData.clear();
         notifyItemRangeRemoved(0, size);
     }
+
+
     @NonNull
     @Override
     public CollabViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,8 +72,10 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
     public void onBindViewHolder(@NonNull CollabViewHolder holder, int position) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        //referencing firestorage
         StorageReference ref = storageReference.child("images/" + mData.get(position).getImgID());
         holder.name.setText(mData.get(position).getName());
+        //setting the image through glideapp on the imageview
         GlideApp.with(context)
                 .load(ref)
                 .placeholder(R.drawable.profiledefault)
@@ -73,6 +84,8 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
         {
             holder.removeBtn.setVisibility(View.GONE);
         }
+
+        // what happens if the remove button is pressed
         holder.removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +97,7 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if(task.isSuccessful())
                                 {
+                                    //Getting the project from firebase
                                     Project eachProject = task.getResult().toObject(Project.class);
                                     ArrayList<String> totalList = eachProject.getCollaborators();
                                     totalList.remove(mData.get(position).getUid());
@@ -99,6 +113,7 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if(task.isSuccessful())
                                 {
+                                    //update the information on the user
                                     User eachUser = task.getResult().toObject(User.class);
                                     ArrayList<String> projectList = eachUser.getProjectList();
                                     projectList.remove(projectID);
@@ -117,10 +132,6 @@ public class CollabAdapter extends RecyclerView.Adapter<CollabViewHolder>  {
     public int getItemCount() {
         return mData.size();
     }
-
-
-
-
 
 
 }

@@ -178,8 +178,8 @@ public class ProjectSearchFragment extends Fragment {
                 });
 
 
+        Toast.makeText(getContext(), "LOADING", Toast.LENGTH_LONG).show();
         try {
-            Toast.makeText(getContext(), "LOADING", Toast.LENGTH_LONG).show();
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -187,7 +187,7 @@ public class ProjectSearchFragment extends Fragment {
 
         int [] helperArray2 = {2, 3, 4, 5, 6, 7, 4, 5, 6, 7, 10, 11};
 
-        helperArray = helperArray2;
+        //helperArray = helperArray2;
         for (int i = 0; i < MAX_X_VALUE; i++)
         {
             values1.add(new BarEntry(i, helperArray[4*i]));

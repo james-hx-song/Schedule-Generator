@@ -29,6 +29,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * The profile of a project: the information for a project will all be contained here
+ */
 public class ProjectProfileActivity extends AppCompatActivity {
 
     private TextView name, status, capacity, open, sendRq;
@@ -61,6 +64,7 @@ public class ProjectProfileActivity extends AppCompatActivity {
         status.setText(i.getStringExtra(Constants.STATUS));
         capacity.setText(String.valueOf(i.getStringExtra(Constants.SIZE)));
         Boolean openOrNot = i.getBooleanExtra(Constants.OPEN, false);
+        //checks if the project is open or not
         if (openOrNot)
         {
             open.setText(Constants.PUBLIC);
@@ -79,6 +83,9 @@ public class ProjectProfileActivity extends AppCompatActivity {
         seeAllRequests();
     }
 
+    /**
+     * Setting textviews and recyclerviews and buttons for the activity
+     */
     private void setUpTheButtonsAndTexts()
     {
         mStore.collection(Constants.USER).document(mAuth.getUid()).get().addOnCompleteListener(
@@ -121,7 +128,10 @@ public class ProjectProfileActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Redirect to the collabactivity class
+     * @param v of the see collab btn
+     */
     public void seeCollab(View v)
     {
         Intent i = new Intent(this, CollabActivity.class);
@@ -130,6 +140,10 @@ public class ProjectProfileActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Redirect to requestprojectactivity
+     * @param v of button redirection
+     */
     public void sendRequest(View v)
     {
         Intent i = getIntent();
@@ -139,6 +153,9 @@ public class ProjectProfileActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * See all the requests for the current project
+     */
     public void seeAllRequests()
     {
         mStore.collection(Constants.RQ).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -162,6 +179,10 @@ public class ProjectProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Add the project information as intent
+     * @param v of edit button
+     */
     public void editTheInfo(View v)
     {
         Intent editProject = new Intent(this, EditProjectActivity.class);

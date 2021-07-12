@@ -15,6 +15,11 @@ public class Constants {
     public static final String RQ = "request";
     public static final String ROLE = "role";
 
+    public static final String EMPTYFIELDERROR = "please fill in all the information before proceeding";
+    public static final String INVALIDATEEMAIL = "the email format is invalid.";
+    public static final String SUCCESS = "successfully logged in";
+    public static final String FAILURE = "authentification failed";
+
     public static final String PUBLIC = "Public";
     public static final String PRIVATE = "Private";
 

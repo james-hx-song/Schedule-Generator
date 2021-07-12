@@ -21,6 +21,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * Getting the request from firebase
+ */
 public class RequestProfileActivity extends AppCompatActivity {
 
     private TextView nameID, msgID;

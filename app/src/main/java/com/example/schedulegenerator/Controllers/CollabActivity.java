@@ -22,6 +22,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * Checks for collaborators on a project
+ */
 public class CollabActivity extends AppCompatActivity {
 
 
@@ -44,9 +47,13 @@ public class CollabActivity extends AppCompatActivity {
         setUpRecycler();
     }
 
+    /**
+     * setting up the recyclerview for the collaborators
+     */
     private void setUpRecycler()
     {
         String projectID = getIntent().getStringExtra(Constants.ID);
+        //get data from firebase
         fireStore.collection(Constants.PROJECT).document(projectID).get().addOnCompleteListener(
                 new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -80,6 +87,11 @@ public class CollabActivity extends AppCompatActivity {
                 }
         );
     }
+
+    /**
+     * refresh the recyclerview
+     * @param v of the refresh button
+     */
     public void refresh(View v)
     {
         String projectID = getIntent().getStringExtra(Constants.ID);

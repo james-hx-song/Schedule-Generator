@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ScheduleGenerator">
-        <activity android:name=".Controllers.GanttChartActivity"></activity>
         <activity android:name=".Controllers.ProcessProjectActivity" />
         <activity android:name=".Controllers.CollabActivity" />
         <activity android:name=".Controllers.UserProfileActivity" />

@@ -15,6 +15,9 @@ import com.example.schedulegenerator.Fragments.UserSearchFragment;
 import com.example.schedulegenerator.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+/**
+ * Admin page to look at project summary and all users in database.
+ */
 public class ProcessProjectActivity extends AppCompatActivity {
 
     private BottomNavigationView BottomNav;
@@ -27,7 +30,7 @@ public class ProcessProjectActivity extends AppCompatActivity {
 
         BottomNav.setOnNavigationItemSelectedListener(navListener);
     }
-
+   // bottom navigation view
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override

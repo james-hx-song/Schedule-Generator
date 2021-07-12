@@ -20,6 +20,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * Activity that allows users to edit the attributes of their projects
+ */
 public class EditProjectActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText name, status, capacity;
@@ -46,6 +49,9 @@ public class EditProjectActivity extends AppCompatActivity implements AdapterVie
         setUpTexts();
     }
 
+    /**
+     * getting all the texts through intent and setting them up in respective textviews/
+     */
     private void setUpTexts()
     {
         Intent i = getIntent();
@@ -54,10 +60,15 @@ public class EditProjectActivity extends AppCompatActivity implements AdapterVie
         capacity.setText(i.getStringExtra(Constants.SIZE));
     }
 
+    /**
+     * Update the attributes of a project, and upload it to firebase.
+     * @param v
+     */
     public void update(View v)
     {
         Intent i = getIntent();
         String ID = i.getStringExtra(Constants.ID);
+        //update
         firestore.collection(Constants.PROJECT).document(ID).get().addOnCompleteListener
                 (new OnCompleteListener<DocumentSnapshot>() {
             @Override

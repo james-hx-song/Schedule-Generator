@@ -8,8 +8,8 @@
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/project_search_barchart"
-        android:layout_width="383dp"
-        android:layout_height="633dp"
+        android:layout_width="353dp"
+        android:layout_height="517dp"
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"

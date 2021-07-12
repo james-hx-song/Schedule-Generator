@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.schedulegenerator.R;
+import com.example.schedulegenerator.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -18,6 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * Responsible for user sign in, activity that the user first encounters when opening the app
+ */
 public class AuthActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -38,6 +42,10 @@ public class AuthActivity extends AppCompatActivity {
         passwordField = findViewById(R.id.passwordField);
     }
 
+    /**
+     * Action of signing in: authentificating the user with fireabse
+     * @param v sign in button
+     */
     public void signin(View v)
     {
         String emailText = emailField.getText().toString();
@@ -49,6 +57,7 @@ public class AuthActivity extends AppCompatActivity {
         }
         else
         {
+            //Verification with firebase
             mAuth.signInWithEmailAndPassword(emailText, userPassword).addOnCompleteListener(this,
                     new OnCompleteListener<AuthResult>() {
                         @Override
@@ -56,13 +65,13 @@ public class AuthActivity extends AppCompatActivity {
                             if (task.isSuccessful())
                             {
                                 Toast.makeText(AuthActivity.this,
-                                        "successfully signed in the user",
+                                        Constants.SUCCESS,
                                         Toast.LENGTH_LONG).show();
                                 updateUI(mAuth.getCurrentUser());
                             }
                             else
                             {
-                                Toast.makeText(AuthActivity.this, "Authentification failed"
+                                Toast.makeText(AuthActivity.this, Constants.FAILURE
                                                 + task.getException().toString(),
                                         Toast.LENGTH_SHORT).show();
                                 updateUI(null);
@@ -72,6 +81,10 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if firebaseuser is null or not
+     * @param firebaseUser current user
+     */
     private void updateUI(FirebaseUser firebaseUser)
     {
         if (firebaseUser != null)
@@ -82,10 +95,12 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * redirects to sign up page if needed
+     * @param v of signup button
+     */
     public void signup(View v) {
         Intent i = new Intent(this, SignUpActivity.class);
         startActivity(i);
-
-
     }
 }

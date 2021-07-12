@@ -79,12 +79,13 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String email = userEmail.getText().toString();
         String password = userPassword.getText().toString();
+
         if (email.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "please enter email address", Toast.LENGTH_SHORT)
+            Toast.makeText(getApplicationContext(), Constants.EMPTYFIELDERROR, Toast.LENGTH_SHORT)
                     .show();
             updateUI(null);
         } else if (!email.matches(emailPattern)) {
-            Toast.makeText(getApplicationContext(), "invalid email address", Toast.LENGTH_SHORT)
+            Toast.makeText(getApplicationContext(), Constants.INVALIDATEEMAIL, Toast.LENGTH_SHORT)
                     .show();
             updateUI(null);
         } else
@@ -99,11 +100,14 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                                 fireStore.collection(Constants.USER).document(userID).set(
                                         getCurrentUser());
                                 updateUI(mAuth.getCurrentUser());
+                                uploadImage();
+                                Toast.makeText(SignUpActivity.this,
+                                        "Sign up successful", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
         }
-        uploadImage();
+
     }
 
     private void updateUI(FirebaseUser firebaseUser)
@@ -180,8 +184,6 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            Toast.makeText(SignUpActivity.this,
-                                    "Sign up successful", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

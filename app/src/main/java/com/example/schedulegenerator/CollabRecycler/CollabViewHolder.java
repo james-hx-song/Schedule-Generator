@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.schedulegenerator.R;
 
+/**
+ * The viewholder (cardview) for each cell on the recyclerview
+ */
 public class CollabViewHolder extends RecyclerView.ViewHolder {
     public TextView name;
     public ImageView collabImg;

@@ -14,6 +14,9 @@ import com.example.schedulegenerator.Fragments.RequestFragment;
 import com.example.schedulegenerator.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+/**
+ * displays all the information regarding the user
+ */
 public class UserProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView BottomNav;
